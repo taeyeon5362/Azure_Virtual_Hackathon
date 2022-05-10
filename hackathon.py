@@ -1,149 +1,183 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+import seaborn as sns
+import altair as alt    
+import plotly.express as px
+
+#제목
+st.title('보안위협 탐지 AI')
 
 
-#타이틀 
-st.title("2022 Azure Virtual Hackathon 마이크로소프트 해커톤")
+#데이터 불러오기
+time = pd.read_csv('./val.csv', encoding='cp949')
+time.set_index = time['timestamp']
 
-#헤더 
-st.header("제 2분야 AI")
+ai_0 = pd.read_csv('./csv/val_10_0_00.csv', encoding='cp949')
+ai_0.set_index = ai_0['timestamp']
 
-#중간
-st.subheader("streamlit의 이해")
+ai_1 = pd.read_csv('./csv/val_10_0_01.csv', encoding='cp949')
+ai_1.set_index = ai_1['timestamp']
 
-#글자 넣기 
-st.text("버튼 만들기")
+ai_2 = pd.read_csv('./csv/val_10_0_02.csv', encoding='cp949')
+ai_2.set_index = ai_2['timestamp']
 
-if st.button("click button"):
-    st.write("Data Loading..")
+ai_3 = pd.read_csv('./csv/val_10_0_03.csv', encoding='cp949')
+ai_3.set_index = ai_3['timestamp']
 
-if st.button("success"):
-    st.success("Successful!")
-    
-if st.button("error"):
-    st.error("error!")
+ai_4 = pd.read_csv('./csv/val_10_0_04.csv', encoding='cp949')
+ai_4.set_index = ai_4['timestamp']
 
-if st.button("information"):
-    st.info("Information")
+ai_5 = pd.read_csv('./csv/val_10_0_05.csv', encoding='cp949')
+ai_5.set_index = ai_5['timestamp']
 
-if st.button("warning"):
-    st.warning("This is a warning")
+ai_6 = pd.read_csv('./csv/val_10_0_06.csv', encoding='cp949')
+ai_6.set_index = ai_6['timestamp']
 
-input = st.text_input(label = "message", value="입력하시오",max_chars=10, help='10글자 이상 입력x')
-st.write(input)
+ai_7 = pd.read_csv('./csv/val_10_0_07.csv', encoding='cp949')
+ai_7.set_index = ai_7['timestamp']
 
+ai_8 = pd.read_csv('./csv/val_10_0_08.csv', encoding='cp949')
+ai_8.set_index = ai_8['timestamp']
 
-checkbox_btn = st.checkbox('checkbox Button')
+ai_9 = pd.read_csv('./csv/val_10_0_09.csv', encoding='cp949')
+ai_9.set_index = ai_9['timestamp']
 
-if checkbox_btn:
-    st.write('Great!')
-
-#왼쪽 사이드바 
-add_selectbox = st.sidebar.selectbox("MS Azure Hackathon Select Box", ("DevOps", "AI", "Gaming"))
-
-#드랍다운 선택
-sel = st.selectbox("선택하세요. ",
-                   ["사과","바나나","오렌지","멜론","수박"])
-st.write("당신이 선택한 과일은 ",sel,"입니다. ")
-
-#드랍다운 다중 선택 
-selectbox_mul = st.multiselect("선택하세요. ",
-                          ("DevOps_1","DevOps_2",
-                           "AI_1","AI_2",
-                           "Gaming_1","Gaming_2"))
-st.write(len(selectbox_mul),"가지를 선택했습니다. ")
+ai_10 = pd.read_csv('./csv/val_10_0_10.csv', encoding='cp949')
+ai_10.set_index = ai_10['timestamp']
 
 
+#저작권 링크 
+if st.button('data copyright link'):
+    st.write('https://dacon.io/competitions/official/235757/data')
 
-from sklearn.datasets import load_iris
-iris = load_iris()
-iris_df = pd.DataFrame(iris.data, columns=iris.feature_names)
-iris_df['target'] = iris['target']
-iris_df['target'] = iris_df['target'].apply(lambda x: 'setosa' if x == 0 else ('versicolor' if x == 1 else 'virginica'))
-
-#전체 리턴 
-st.table(iris_df.head())
-
-#스크롤 데이터 관찰 
-st.dataframe(iris_df)
-st.write(iris_df)
-
-
-#슬라이더
-level = st.slider("레벨을 선택하세요.",1,100)
-st.write("당신이 선택한 레벨은 ",level,"입니다.")
-
-
-#날짜입력
-import datetime
-today = st.date_input("날짜를 선택하세요.", datetime.datetime.now())
-the_time = st.time_input("시간을 입력하세요", datetime.time())
-st.write("오늘의 날짜는",today,"입니다.")
-st.write("지금 시간은",the_time,"입니다.")
+#표 가져오기 
+st.write(time)
 
 
 
-st.text(" ")
-st.text(" ")
-st.text(" ")
-st.text(" ")
-st.text(" ")
-st.text(" ")
+#선 그래프
+
+#time
+st.subheader('시간별 더하기')
+time_sum = time.groupby('timestamp').sum()
+times_sum = time_sum.index.tolist()
+option = st.selectbox('select',(times_sum))
+
+time_data_sum = time_sum.loc[(time_sum.index == option)]
+time_index_sum = time_data_sum.index.tolist()
+st.line_chart(time_data_sum.loc[time_index_sum[0]], use_container_width=True)
+
+#ai
+st.subheader('ai별')
 
 
-st.subheader("대시보드 변수 구상")
+ai_0 = ai_0.groupby('timestamp').sum()
+aies_0 = ai_0.index.tolist()
+option = st.selectbox('Select_0',(aies_0))
 
-from PIL import Image
-img = Image.open("/Users/gimtaeyeon/ai.png")
-st.image(img, width=800,caption="AI 사진 ")
-
-st.markdown("전체적인 인공지능 대시보드")
-
-st.markdown("- 위협이 되는 이유 \n"
-            "  - 하드웨어 \n"
-            "  - 소프트웨어 \n")
-st.markdown("- 인공지능 사용시 효과 \n"
-            "  - 이용 시 \n"
-            "  - 이용 안 할 시 \n")
-st.markdown("- 인공지능 이용 및 감지 \n"
-            "  - A  case \n"
-            "  - B  case \n"
-            "  - C  case \n"
-            "  - D  case \n")
-
-st.markdown("- 인공지능으로 발견할 수 있는 위협 종류 \n"
-            "  - A dan \n"
-            "  - B dan \n"
-            "  - C dan \n"
-            "  - D dan \n")
-
-st.markdown("- 사용 분야 (원그래프) \n"
-            "  - A \n"
-            "  - B \n"
-            "  - C \n"
-            "  - D \n")
+ai_data_0 = ai_0.loc[(ai_0.index == option)]
+ai_index_0 = ai_data_0.index.tolist()
+st.line_chart(ai_data_0.loc[ai_index_0[0]], use_container_width=True)
 
 
-st.markdown("인공지능 사용 시 결과 대시보드")
+ai_1 = ai_1.groupby('timestamp').sum()
+aies_1 = ai_1.index.tolist()
+option = st.selectbox('Select_1',(aies_1))
 
-st.markdown("- 인공지능을 사용할 프로그램 명 \n"
-            "  - 인공지능 실행 날짜(기간) 등 간단한 프로그램을 돌리는 조건 \n"
-            "  - 프로그램 용량, 프로그램 카테고리 등 간단한 프로그램 설명 \n"
-            "  - 사용 전 보안 정도 \n"
-            "  - 사용 후 기간별 보안 정도 (막대그래프) \n"
-            "  - 관측된 위협 정보 (항목) \n"
-            "  - 프로그램 보완 사항 \n")
-            
+ai_data_1 = ai_1.loc[(ai_1.index == option)]
+ai_index_1 = ai_data_1.index.tolist()
+st.line_chart(ai_data_1.loc[ai_index_1[0]], use_container_width=True)
 
 
-st.subheader("스웜러닝 이란?")
+ai_2 = ai_2.groupby('timestamp').sum()
+aies_2 = ai_2.index.tolist()
+option = st.selectbox('Select_2',(aies_2))
 
-st.markdown("1. 스웜러닝\n"
-            "   1. 스웜러닝의 효과 \n"
-            "   2. 스웜러닝 \n"
-            "2. 스웜런닝 이용시 얼마나 효과가 있는가 \n"
-            "   1. 이용 안할시 \n"
-            "   2. 이용 시 \n"
-            "3. item 3\n")
+ai_data_2 = ai_2.loc[(ai_2.index == option)]
+ai_index_2 = ai_data_2.index.tolist()
+st.line_chart(ai_data_2.loc[ai_index_2[0]], use_container_width=True)
 
+
+ai_3 = ai_3.groupby('timestamp').sum()
+aies_3 = ai_3.index.tolist()
+option = st.selectbox('Select_3',(aies_3))
+
+ai_data_3 = ai_3.loc[(ai_3.index == option)]
+ai_index_3 = ai_data_3.index.tolist()
+st.line_chart(ai_data_3.loc[ai_index_3[0]], use_container_width=True)
+
+
+ai_4 = ai_4.groupby('timestamp').sum()
+aies_4 = ai_4.index.tolist()
+option = st.selectbox('Select_4',(aies_4))
+
+ai_data_4 = ai_4.loc[(ai_4.index == option)]
+ai_index_4 = ai_data_4.index.tolist()
+st.line_chart(ai_data_4.loc[ai_index_4[0]], use_container_width=True)
+
+
+ai_5 = ai_5.groupby('timestamp').sum()
+aies_5 = ai_5.index.tolist()
+option = st.selectbox('Select_5',(aies_5))
+
+ai_data_5 = ai_5.loc[(ai_5.index == option)]
+ai_index_5 = ai_data_5.index.tolist()
+st.line_chart(ai_data_5.loc[ai_index_5[0]], use_container_width=True)
+
+
+ai_6 = ai_6.groupby('timestamp').sum()
+aies_6 = ai_6.index.tolist()
+option = st.selectbox('Select_6',(aies_6))
+
+ai_data_6 = ai_6.loc[(ai_6.index == option)]
+ai_index_6 = ai_data_6.index.tolist()
+st.line_chart(ai_data_6.loc[ai_index_6[0]], use_container_width=True)
+
+
+ai_7 = ai_7.groupby('timestamp').sum()
+aies_7 = ai_7.index.tolist()
+option = st.selectbox('Select_7',(aies_7))
+
+ai_data_7 = ai_7.loc[(ai_7.index == option)]
+ai_index_7 = ai_data_7.index.tolist()
+st.line_chart(ai_data_7.loc[ai_index_7[0]], use_container_width=True)
+
+
+ai_8 = ai_8.groupby('timestamp').sum()
+aies_8 = ai_8.index.tolist()
+option = st.selectbox('Select_8',(aies_8))
+
+ai_data_8 = ai_8.loc[(ai_8.index == option)]
+ai_index_8 = ai_data_8.index.tolist()
+st.line_chart(ai_data_8.loc[ai_index_8[0]], use_container_width=True)
+
+
+ai_9 = ai_9.groupby('timestamp').sum()
+aies_9 = ai_9.index.tolist()
+option = st.selectbox('Select_9',(aies_9))
+
+ai_data_9 = ai_9.loc[(ai_9.index == option)]
+ai_index_9 = ai_data_9.index.tolist()
+st.line_chart(ai_data_9.loc[ai_index_9[0]], use_container_width=True)
+
+
+
+
+                      
+
+
+#막대 그래프
+val = pd.read_csv('./validation_fin.csv')
+#st.dataframe(val)
+fig1 = px.bar(val, x='ai', y='time')
+st.plotly_chart(fig1)
+
+#원 그래프
+fig2 = px.pie(val, values='time', names='ai', title='Pie Chart of AI')      
+st.plotly_chart(fig2)
 
