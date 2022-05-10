@@ -148,3 +148,12 @@ option = st.selectbox('Select_9',(aies_9))
 ai_data_9 = ai_9.loc[(ai_9.index == option)]
 ai_index_9 = ai_data_9.index.tolist()
 st.line_chart(ai_data_9.loc[ai_index_9[0]], use_container_width=True)
+
+
+ai_10 = ai_10.groupby('timestamp').sum()
+aies_10 = ai_10.index.tolist()
+option = st.selectbox('Select_10',(aies_10))
+
+ai_data_10 = ai_10.loc[(ai_10.index == option)]
+ai_index_10 = ai_data_10.index.tolist()
+st.line_chart(ai_data_10.loc[ai_index_10[0]], use_container_width=True)
