@@ -56,11 +56,14 @@ ai_10.set_index = ai_10['timestamp']
 st.subheader('보안 데이터 수치')
 st.subheader(' ')
 
-option = st.selectbox('Select Time', (df['timestamp']))
-time_data = dfloc[(df['timestamp'] == option)]
-t_index = time_data.index.tolist()
-st.line_chart(time_data.loc[t_index[0]],use_container_width=True)
 
+df= df.groupby('timestamp').sum()
+df_time = df.index.tolist()
+option = st.selectbox('Select Time',(df_time))
+
+df_data = df.loc[(df.index == option)]
+df_index = df_data.index.tolist()
+st.line_chart(df_data.loc[df_index[0]], use_container_width=True)
 
 
 
