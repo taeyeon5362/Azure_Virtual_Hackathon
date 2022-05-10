@@ -1,159 +1,137 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-import seaborn as sns
-import altair as alt    
-import plotly.express as px
+###################################
+from st_aggrid import AgGrid
+from st_aggrid.grid_options_builder import GridOptionsBuilder
+from st_aggrid.shared import JsCode
 
-#제목
-st.title('A 프로그램')
-st.subheader('프로그램 설명 | 날짜 : 2022.01.01 ~ 2022.01.02 | 용량 : 2.03 GB | 카테고리 : A ')
+###################################
 
-#데이터 불러오기
-ai_0 = pd.read_csv('./csv/val_10_0_00.csv', encoding='cp949')
-ai_0.set_index = ai_0['timestamp']
+from functionforDownloadButtons import download_button
 
-ai_1 = pd.read_csv('./csv/val_10_0_01.csv', encoding='cp949')
-ai_1.set_index = ai_1['timestamp']
-
-ai_2 = pd.read_csv('./csv/val_10_0_02.csv', encoding='cp949')
-ai_2.set_index = ai_2['timestamp']
-
-ai_3 = pd.read_csv('./csv/val_10_0_03.csv', encoding='cp949')
-ai_3.set_index = ai_3['timestamp']
-
-ai_4 = pd.read_csv('./csv/val_10_0_04.csv', encoding='cp949')
-ai_4.set_index = ai_4['timestamp']
-
-ai_5 = pd.read_csv('./csv/val_10_0_05.csv', encoding='cp949')
-ai_5.set_index = ai_5['timestamp']
-
-ai_6 = pd.read_csv('./csv/val_10_0_06.csv', encoding='cp949')
-ai_6.set_index = ai_6['timestamp']
-
-ai_7 = pd.read_csv('./csv/val_10_0_07.csv', encoding='cp949')
-ai_7.set_index = ai_7['timestamp']
-
-ai_8 = pd.read_csv('./csv/val_10_0_08.csv', encoding='cp949')
-ai_8.set_index = ai_8['timestamp']
-
-ai_9 = pd.read_csv('./csv/val_10_0_09.csv', encoding='cp949')
-ai_9.set_index = ai_9['timestamp']
-
-ai_10 = pd.read_csv('./csv/val_10_0_10.csv', encoding='cp949')
-ai_10.set_index = ai_10['timestamp']
+###################################
 
 
-#막대 그래프
+def _max_width_():
+    max_width_str = f"max-width: 1800px;"
+    st.markdown(
+        f"""
+    <style>
+    .reportview-container .main .block-container{{
+        {max_width_str}
+    }}
+    </style>    
+    """,
+        unsafe_allow_html=True,
+    )
 
-st.subheader('변수 중요도')
+st.set_page_config(page_icon="✂️", page_title="CSV Wrangler")
 
-val = pd.read_csv('./csv/validation_fin.csv')
-fig1 = px.bar(val, x='ai', y='time')
-st.plotly_chart(fig1)
+# st.image("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/balloon_1f388.png", width=100)
+st.image(
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/scissors_2702-fe0f.png",
+    width=100,
+)
 
-#ai
-st.subheader('보안 데이터 수치')
+st.title("CSV Wrangler")
 
-
-ai_0 = ai_0.groupby('timestamp').sum()
-aies_0 = ai_0.index.tolist()
-option = st.selectbox('Select_0',(aies_0))
-
-ai_data_0 = ai_0.loc[(ai_0.index == option)]
-ai_index_0 = ai_data_0.index.tolist()
-st.line_chart(ai_data_0.loc[ai_index_0[0]], use_container_width=True)
-
-
-ai_1 = ai_1.groupby('timestamp').sum()
-aies_1 = ai_1.index.tolist()
-option = st.selectbox('Select_1',(aies_1))
-
-ai_data_1 = ai_1.loc[(ai_1.index == option)]
-ai_index_1 = ai_data_1.index.tolist()
-st.line_chart(ai_data_1.loc[ai_index_1[0]], use_container_width=True)
+# st.caption(
+#     "PRD : TBC | Streamlit Ag-Grid from Pablo Fonseca: https://pypi.org/project/streamlit-aggrid/"
+# )
 
 
-ai_2 = ai_2.groupby('timestamp').sum()
-aies_2 = ai_2.index.tolist()
-option = st.selectbox('Select_2',(aies_2))
+# ModelType = st.radio(
+#     "Choose your model",
+#     ["Flair", "DistilBERT (Default)"],
+#     help="At present, you can choose between 2 models (Flair or DistilBERT) to embed your text. More to come!",
+# )
 
-ai_data_2 = ai_2.loc[(ai_2.index == option)]
-ai_index_2 = ai_data_2.index.tolist()
-st.line_chart(ai_data_2.loc[ai_index_2[0]], use_container_width=True)
-
-
-ai_3 = ai_3.groupby('timestamp').sum()
-aies_3 = ai_3.index.tolist()
-option = st.selectbox('Select_3',(aies_3))
-
-ai_data_3 = ai_3.loc[(ai_3.index == option)]
-ai_index_3 = ai_data_3.index.tolist()
-st.line_chart(ai_data_3.loc[ai_index_3[0]], use_container_width=True)
-
-
-ai_4 = ai_4.groupby('timestamp').sum()
-aies_4 = ai_4.index.tolist()
-option = st.selectbox('Select_4',(aies_4))
-
-ai_data_4 = ai_4.loc[(ai_4.index == option)]
-ai_index_4 = ai_data_4.index.tolist()
-st.line_chart(ai_data_4.loc[ai_index_4[0]], use_container_width=True)
+# with st.expander("ToDo's", expanded=False):
+#     st.markdown(
+#         """
+# -   Add pandas.json_normalize() - https://streamlit.slack.com/archives/D02CQ5Z5GHG/p1633102204005500
+# -   **Remove 200 MB limit and test with larger CSVs**. Currently, the content is embedded in base64 format, so we may end up with a large HTML file for the browser to render
+# -   **Add an encoding selector** (to cater for a wider array of encoding types)
+# -   **Expand accepted file types** (currently only .csv can be imported. Could expand to .xlsx, .txt & more)
+# -   Add the ability to convert to pivot → filter → export wrangled output (Pablo is due to change AgGrid to allow export of pivoted/grouped data)
+# 	    """
+#     )
+# 
+#     st.text("")
 
 
-ai_5 = ai_5.groupby('timestamp').sum()
-aies_5 = ai_5.index.tolist()
-option = st.selectbox('Select_5',(aies_5))
+c29, c30, c31 = st.columns([1, 6, 1])
 
-ai_data_5 = ai_5.loc[(ai_5.index == option)]
-ai_index_5 = ai_data_5.index.tolist()
-st.line_chart(ai_data_5.loc[ai_index_5[0]], use_container_width=True)
+with c30:
 
+    uploaded_file = st.file_uploader(
+        "",
+        key="1",
+        help="To activate 'wide mode', go to the hamburger menu > Settings > turn on 'wide mode'",
+    )
 
-ai_6 = ai_6.groupby('timestamp').sum()
-aies_6 = ai_6.index.tolist()
-option = st.selectbox('Select_6',(aies_6))
+    if uploaded_file is not None:
+        file_container = st.expander("Check your uploaded .csv")
+        shows = pd.read_csv(uploaded_file)
+        uploaded_file.seek(0)
+        file_container.write(shows)
 
-ai_data_6 = ai_6.loc[(ai_6.index == option)]
-ai_index_6 = ai_data_6.index.tolist()
-st.line_chart(ai_data_6.loc[ai_index_6[0]], use_container_width=True)
+    else:
+        st.info(
+            f"""
+                👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
+                """
+        )
 
+        st.stop()
 
-ai_7 = ai_7.groupby('timestamp').sum()
-aies_7 = ai_7.index.tolist()
-option = st.selectbox('Select_7',(aies_7))
+from st_aggrid import GridUpdateMode, DataReturnMode
 
-ai_data_7 = ai_7.loc[(ai_7.index == option)]
-ai_index_7 = ai_data_7.index.tolist()
-st.line_chart(ai_data_7.loc[ai_index_7[0]], use_container_width=True)
+gb = GridOptionsBuilder.from_dataframe(shows)
+# enables pivoting on all columns, however i'd need to change ag grid to allow export of pivoted/grouped data, however it select/filters groups
+gb.configure_default_column(enablePivot=True, enableValue=True, enableRowGroup=True)
+gb.configure_selection(selection_mode="multiple", use_checkbox=True)
+gb.configure_side_bar()  # side_bar is clearly a typo :) should by sidebar
+gridOptions = gb.build()
 
+st.success(
+    f"""
+        💡 Tip! Hold the shift key when selecting rows to select multiple rows at once!
+        """
+)
 
-ai_8 = ai_8.groupby('timestamp').sum()
-aies_8 = ai_8.index.tolist()
-option = st.selectbox('Select_8',(aies_8))
+response = AgGrid(
+    shows,
+    gridOptions=gridOptions,
+    enable_enterprise_modules=True,
+    update_mode=GridUpdateMode.MODEL_CHANGED,
+    data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
+    fit_columns_on_grid_load=False,
+)
 
-ai_data_8 = ai_8.loc[(ai_8.index == option)]
-ai_index_8 = ai_data_8.index.tolist()
-st.line_chart(ai_data_8.loc[ai_index_8[0]], use_container_width=True)
+df = pd.DataFrame(response["selected_rows"])
 
+st.subheader("Filtered data will appear below 👇 ")
+st.text("")
 
-ai_9 = ai_9.groupby('timestamp').sum()
-aies_9 = ai_9.index.tolist()
-option = st.selectbox('Select_9',(aies_9))
+st.table(df)
 
-ai_data_9 = ai_9.loc[(ai_9.index == option)]
-ai_index_9 = ai_data_9.index.tolist()
-st.line_chart(ai_data_9.loc[ai_index_9[0]], use_container_width=True)
+st.text("")
 
+c29, c30, c31 = st.columns([1, 1, 2])
 
-ai_10 = ai_10.groupby('timestamp').sum()
-aies_10 = ai_10.index.tolist()
-option = st.selectbox('Select_10',(aies_10))
+with c29:
 
-ai_data_10 = ai_10.loc[(ai_10.index == option)]
-ai_index_10 = ai_data_10.index.tolist()
-st.line_chart(ai_data_10.loc[ai_index_10[0]], use_container_width=True)
+    CSVButton = download_button(
+        df,
+        "File.csv",
+        "Download to CSV",
+    )
+
+with c30:
+    CSVButton = download_button(
+        df,
+        "File.csv",
+        "Download to TXT",
+    )
