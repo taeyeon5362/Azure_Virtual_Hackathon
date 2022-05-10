@@ -10,13 +10,10 @@ import altair as alt
 import plotly.express as px
 
 #제목
-st.title('보안위협 탐지 AI')
-
+st.title('A 프로그램')
+st.subheader('프로그램 설명 | 날짜 : 2022.01.01 ~ 2022.01.02 | 용량 : 2.03 GB | 카테고리 : A ')
 
 #데이터 불러오기
-time = pd.read_csv('./val.csv', encoding='cp949')
-time.set_index = time['timestamp']
-
 ai_0 = pd.read_csv('./csv/val_10_0_00.csv', encoding='cp949')
 ai_0.set_index = ai_0['timestamp']
 
@@ -51,29 +48,16 @@ ai_10 = pd.read_csv('./csv/val_10_0_10.csv', encoding='cp949')
 ai_10.set_index = ai_10['timestamp']
 
 
-#저작권 링크 
-if st.button('data copyright link'):
-    st.write('https://dacon.io/competitions/official/235757/data')
+#막대 그래프
 
-#표 가져오기 
-st.write(time)
+st.subheader('변수 중요도')
 
-
-
-#선 그래프
-
-#time
-st.subheader('시간별 더하기')
-time_sum = time.groupby('timestamp').sum()
-times_sum = time_sum.index.tolist()
-option = st.selectbox('select',(times_sum))
-
-time_data_sum = time_sum.loc[(time_sum.index == option)]
-time_index_sum = time_data_sum.index.tolist()
-st.line_chart(time_data_sum.loc[time_index_sum[0]], use_container_width=True)
+val = pd.read_csv('./csv/validation_fin.csv')
+fig1 = px.bar(val, x='ai', y='time')
+st.plotly_chart(fig1)
 
 #ai
-st.subheader('ai별')
+st.subheader('보안 데이터 수치')
 
 
 ai_0 = ai_0.groupby('timestamp').sum()
@@ -164,20 +148,3 @@ option = st.selectbox('Select_9',(aies_9))
 ai_data_9 = ai_9.loc[(ai_9.index == option)]
 ai_index_9 = ai_data_9.index.tolist()
 st.line_chart(ai_data_9.loc[ai_index_9[0]], use_container_width=True)
-
-
-
-
-                      
-
-
-#막대 그래프
-val = pd.read_csv('./validation_fin.csv')
-#st.dataframe(val)
-fig1 = px.bar(val, x='ai', y='time')
-st.plotly_chart(fig1)
-
-#원 그래프
-fig2 = px.pie(val, values='time', names='ai', title='Pie Chart of AI')      
-st.plotly_chart(fig2)
-
