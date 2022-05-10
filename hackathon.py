@@ -60,6 +60,16 @@ ai_data_0 = ai_0.loc[(ai_0.index == option)]
 ai_index_0 = ai_data_0.index.tolist()
 st.line_chart(ai_data_0.loc[ai_index_0[0]], use_container_width=True)
 
+
+ai_1 = ai_1.groupby('timestamp').sum()
+aies_1 = ai_1.index.tolist()
+option = st.selectbox('Select_1',(aies_1))
+
+ai_data_1 = ai_1.loc[(ai_1.index == option)]
+ai_index_1 = ai_data_1.index.tolist()
+st.line_chart(ai_data_1.loc[ai_index_1[0]], use_container_width=True)
+
+
 ai_2 = ai_2.groupby('timestamp').sum()
 aies_2 = ai_2.index.tolist()
 option = st.selectbox('Select_2',(aies_2))
