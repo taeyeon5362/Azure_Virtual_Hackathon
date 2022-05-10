@@ -1,13 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Agg')
-import seaborn as sns
-import altair as alt    
-import plotly.express as px
-import os
+
 
 #제목
 st.title('A 프로그램')
