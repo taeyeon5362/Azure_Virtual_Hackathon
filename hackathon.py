@@ -12,8 +12,8 @@ st.subheader(' ')
 
 #데이터 불러오기
 
-df = pd.read_csv('./csv/val.csv', encoding='cp949')
-df.set_index = df['timestamp']
+time = pd.read_csv('./val.csv', encoding='cp949')
+time.set_index = time['timestamp']
 
 ai_0 = pd.read_csv('./csv/val_10_0_00.csv', encoding='cp949')
 ai_0.set_index = ai_0['timestamp']
@@ -54,13 +54,7 @@ ai_10.set_index = ai_10['timestamp']
 #ai 그래프
 
 
-st.subheader('보안 데이터 수치')
-st.subheader(' ')
 
-option = st.selectbox('Select Time', (df['timestamp']))
-time_data = dfloc[(df['timestamp'] == option)]
-t_index = time_data.index.tolist()
-st.line_chart(time_data.loc[t_index[0]],use_container_width=True)
 
 
 
