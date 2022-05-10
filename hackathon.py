@@ -12,30 +12,25 @@ import plotly.express as px
 st.title('A 프로그램')
 st.subheader('프로그램 설명 | 날짜 : 2022.01.01 ~ 2022.01.02 | 용량 : 2.03 GB | 카테고리 : A ')
 
-with c30:
-
-    uploaded_file = st.file_uploader(
-        "",
-        key="1",
-        help="To activate 'wide mode', go to the hamburger menu > Settings > turn on 'wide mode'",
-    )
-
-    if uploaded_file is not None:
-        file_container = st.expander("Check your uploaded .csv")
-        shows = pd.read_csv(uploaded_file)
-        uploaded_file.seek(0)
-        file_container.write(shows)
-
-    else:
-        st.info(
-            f"""
-                👆 Upload a .csv file first. Sample to try: [biostats.csv](https://people.sc.fsu.edu/~jburkardt/data/csv/biostats.csv)
-                """
-        )
-
-        st.stop()
-
-
+try:
+    bytesData = uploadedFile.getvalue()
+    encoding = encodingUTF8 
+    s=str(bytesData,encoding)
+    result = StringIO(s) 
+except:
+    bytesData = uploadedFile.getvalue()
+    encoding = encodingISO 
+    s=str(bytesData,encoding)
+    result = StringIO(s)
+        
+uploadedFile = st.file_uploader(fileUploadLabel, type=['csv','xlsx'],accept_multiple_files=False,key="fileUploader")
+try:
+        df=pd.read_csv(dataUploaded, error_bad_lines=True, warn_bad_lines=False,sep=chosenFileSeparator)
+except:
+    try:
+        df = pd.read_excel(dataUploaded)
+    except:      
+        df=pd.DataFrame()
 
 
 #데이터 불러오기
