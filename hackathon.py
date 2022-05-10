@@ -12,7 +12,7 @@ st.subheader(' ')
 
 #데이터 불러오기
 
-time = pd.read_csv('./val.csv', encoding='cp949')
+time = pd.read_csv('./csv/val.csv', encoding='cp949')
 time.set_index = time['timestamp']
 
 ai_0 = pd.read_csv('./csv/val_10_0_00.csv', encoding='cp949')
