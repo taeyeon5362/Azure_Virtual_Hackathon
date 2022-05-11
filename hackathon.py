@@ -52,4 +52,11 @@ data_index_1 = data_data_1.index.tolist()
 st.line_chart(data_data_1.loc[data_index_1[0]], use_container_width=True)
 
 
+data_2 = data_2.groupby('timestamp').sum()
+datas_2 = data_2.index.tolist()
+option = st.selectbox('Select Data 2',(datas_2))
+
+data_data_2 = data_2.loc[(data_2.index == option)]
+data_index_2 = data_data_2.index.tolist()
+st.line_chart(data_data_2.loc[data_index_2[0]], use_container_width=True)
 
