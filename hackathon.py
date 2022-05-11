@@ -73,5 +73,5 @@ st.subheader(' ')
 
 st.write(alt.Chart(fin).mark_bar().encode(
     x=alt.X('data', sort=None),
-    y='fin', use_container_width=True
+    y='fin', use_container_width=True,
 ))
