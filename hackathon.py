@@ -19,7 +19,8 @@ time.set_index = time['timestamp']
 data_1 = pd.read_csv('./csv/validation_data_1.csv', encoding='cp949')
 data_1.set_index = data_1['timestamp']
 
-
+data_2 = pd.read_csv('./csv/validation_data_2.csv', encoding='cp949')
+data_2.set_index = data_2['timestamp']
 
 
 
