@@ -71,4 +71,7 @@ st.subheader(' ')
 st.header('변수 중요도')
 st.subheader(' ')
 
-st.write(alt.Chart(fin).mark_bar.encode(x=alt.X('timestamp', sort=None), y='fin',))
+st.write(alt.Chart(fin).mark_bar().encode(
+    x=alt.X('timestamp', sort=None),
+    y='fin',
+))
