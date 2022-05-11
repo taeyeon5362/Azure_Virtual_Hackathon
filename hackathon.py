@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
+
 
 
 #제목
@@ -22,7 +22,7 @@ data_1.set_index = data_1['timestamp']
 data_2 = pd.read_csv('./csv/validation_data_2.csv', encoding='cp949')
 data_2.set_index = data_2['timestamp']
 
-
+fin = pd.read_csv('./csv/validation_fin.csv')
 
 #ai 그래프
 
@@ -70,7 +70,5 @@ st.subheader(' ')
 st.header('변수 중요도')
 st.subheader(' ')
 
-fin = pd.read_csv('./csv/validation_fin.csv')
-#st.dataframe(val)
-fin_chart = px.bar(fin, x='timestamp', y='fin')
-st.plotly_chart(fin_chart)
+
+st.write(fin)
