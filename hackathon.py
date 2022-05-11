@@ -22,6 +22,8 @@ data_1.set_index = data_1['timestamp']
 data_2 = pd.read_csv('./csv/validation_data_2.csv', encoding='cp949')
 data_2.set_index = data_2['timestamp']
 
+fin = pd.read_csv('./csv/validation_fin.csv', encoding='cp949')
+
 
 #ai 그래프
 
@@ -64,3 +66,9 @@ option = st.selectbox('Select Data 2',(datas_2))
 data_data_2 = data_2.loc[(data_2.index == option)]
 data_index_2 = data_data_2.index.tolist()
 st.line_chart(data_data_2.loc[data_index_2[0]], use_container_width=True)
+
+st.subheader(' ')
+st.header('변수 중요도')
+st.subheader(' ')
+
+st.bar_chart(fin)
