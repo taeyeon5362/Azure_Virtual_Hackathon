@@ -72,5 +72,5 @@ st.subheader(' ')
 
 val = pd.read_csv('./csv/validation_fin.csv')
 #st.dataframe(val)
-fig1 = px.bar(val, x='ai', y='time')
+fig1 = px.bar(val, x='timestamp', y='fin')
 st.plotly_chart(fig1)
