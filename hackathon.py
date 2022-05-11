@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 
 
 
@@ -70,5 +71,4 @@ st.subheader(' ')
 st.header('변수 중요도')
 st.subheader(' ')
 
-
-st.write(fin)
+st.write(alt.Chart(fin).mark_bar.encode(x=alt.X('timestamp', sort=None), y='fin',))
