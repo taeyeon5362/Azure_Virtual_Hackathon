@@ -71,7 +71,6 @@ st.subheader(' ')
 st.header('변수 중요도')
 st.subheader(' ')
 
-st.write(alt.Chart(fin).mark_bar().encode(
-    x=alt.X('data', sort=None),
-    y='fin', use_container_width=True,
-))
+fin_chart = alt.Chart(fin).mark_bar().encode(x=alt.X('data', sort=None), y='fin', )
+st.altair_chart(fin_chart, use_container_width=True)
+
