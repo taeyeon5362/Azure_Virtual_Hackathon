@@ -25,11 +25,20 @@ data_2.set_index = data_2['timestamp']
 
 fin = pd.read_csv('./csv/validation_fin.csv')
 
+
 #ai 그래프
 
-st.header('보안 데이터 수치')
+st.header('변수 중요도')
 st.subheader(' ')
 
+fin_chart = alt.Chart(fin).mark_bar().encode(x=alt.X('data', sort=None), y='fin', )
+st.altair_chart(fin_chart, use_container_width=True)
+
+
+
+st.subheader(' ')
+st.header('보안 데이터 수치')
+st.subheader(' ')
 
 st.subheader('시간별 데이터 비교')
 
@@ -67,10 +76,5 @@ data_data_2 = data_2.loc[(data_2.index == option)]
 data_index_2 = data_data_2.index.tolist()
 st.line_chart(data_data_2.loc[data_index_2[0]], use_container_width=True)
 
-st.subheader(' ')
-st.header('변수 중요도')
-st.subheader(' ')
 
-fin_chart = alt.Chart(fin).mark_bar().encode(x=alt.X('data', sort=None), y='fin', )
-st.altair_chart(fin_chart, use_container_width=True)
 
