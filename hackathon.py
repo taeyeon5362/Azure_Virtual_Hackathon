@@ -22,7 +22,6 @@ data_1.set_index = data_1['timestamp']
 data_2 = pd.read_csv('./csv/validation_data_2.csv', encoding='cp949')
 data_2.set_index = data_2['timestamp']
 
-fin = pd.read_csv('./csv/validation_fin.csv', encoding='cp949')
 
 
 #ai 그래프
@@ -71,4 +70,7 @@ st.subheader(' ')
 st.header('변수 중요도')
 st.subheader(' ')
 
-st.bar_chart(fin)
+val = pd.read_csv('./csv/validation_fin.csv')
+#st.dataframe(val)
+fig1 = px.bar(val, x='ai', y='time')
+st.plotly_chart(fig1)
