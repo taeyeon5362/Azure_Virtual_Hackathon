@@ -1,3 +1,6 @@
 streamlit
-streamlit-aggrid==0.2.2-2
-click==8
+pandas
+numpy
+seaborn
+matplotlib
+censusdata
