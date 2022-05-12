@@ -6,8 +6,8 @@ import altair as alt
 
 
 #제목
-st.title('A 프로그램')
-st.header('프로그램 설명  |  날짜 : 2021.07.10 ~ 2021.07.11  |  용량 : 2.03 GB  |  카테고리 : A ')
+st.title('SAI Board - cyber Security Advisor')
+st.header('cyber Security Advisor | Example 프로그램 | 날짜 : 2021.07.10 ~ 2021.07.11  |  용량 : 2.03 GB  |  카테고리 : A ')
 st.subheader(' ')
 st.subheader(' ')
 
@@ -29,6 +29,7 @@ fin = pd.read_csv('./csv/validation_fin.csv')
 #ai 그래프
 
 st.header('변수 중요도')
+st.write('Variable Importance')
 st.subheader(' ')
 
 fin_chart = alt.Chart(fin).mark_bar().encode(x=alt.X('data', sort=None), y='fin', )
@@ -38,6 +39,7 @@ st.altair_chart(fin_chart, use_container_width=True)
 
 st.subheader(' ')
 st.header('보안 데이터 수치')
+st.write('Security Data Figures')
 st.subheader(' ')
 
 st.subheader('시간별 데이터 비교')
