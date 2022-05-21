@@ -78,5 +78,3 @@ data_data_2 = data_2.loc[(data_2.index == option)]
 data_index_2 = data_data_2.index.tolist()
 st.line_chart(data_data_2.loc[data_index_2[0]], use_container_width=True)
 
-
-
